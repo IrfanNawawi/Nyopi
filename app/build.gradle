@@ -50,4 +50,9 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.3'
+
+    // flipper fb
+    debugImplementation 'com.facebook.flipper:flipper:0.141.0'
+    debugImplementation 'com.facebook.soloader:soloader:0.10.1'
+
 }
