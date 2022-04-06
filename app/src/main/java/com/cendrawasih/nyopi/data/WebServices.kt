@@ -1,14 +1,10 @@
 package com.cendrawasih.nyopi.data
 
-import com.cendrawasih.nyopi.data.response.BaseResponse
-import com.cendrawasih.nyopi.data.response.LoginRegisResponse
-import com.cendrawasih.nyopi.data.response.UserResponse
+import com.cendrawasih.nyopi.data.response.*
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
-import io.reactivex.Observable
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -25,33 +21,69 @@ interface WebServices {
     fun register(@FieldMap userRegister: Map<String, String>): NyopiResponse<LoginRegisResponse>
 
     @GET(EndPoint.User.GET_USER)
-    fun getUser(
-        @Header("Authorization") auth: String = TOKEN_SAMPLE
-    ): NyopiResponse<UserResponse>
+    fun getUser(@Header("Authorization") auth: String = TOKEN_SAMPLE): NyopiResponse<UserResponse>
 
     @PUT(EndPoint.User.UPDATE_IMAGE_PROFILE)
     fun update_image_profile(@Field("image") image: String): NyopiResponse<UserResponse>
 
-    @POST(EndPoint.User.UPDATE_USER_DETAIL)
+    @PUT(EndPoint.User.UPDATE_USER_DETAIL)
     fun update_user_detail(@FieldMap updateUserDetail: Map<String, String>): NyopiResponse<UserResponse>
 
     // Product
-    @POST(EndPoint.Product.GET_CATEGORY)
-    fun get_category(@FieldMap userLogin: Map<String, String>): NyopiResponse<UserResponse>
+    @GET(EndPoint.Product.GET_CATEGORY)
+    fun get_category(): NyopiResponse<CategoryResponse>
 
-    @POST(EndPoint.Product.GET_PRODUCT)
-    fun get_product(@FieldMap userRegister: Map<String, String>): NyopiResponse<UserResponse>
+    @GET(EndPoint.Product.GET_PRODUCT)
+    fun get_product(): NyopiResponse<PageResponse<ProductResponse>>
 
     @GET(EndPoint.Product.GET_SINGLE_PRODUCT)
-    fun getSingleProduct(
-        @Header("Authorization") auth: String = TOKEN_SAMPLE
-    ): NyopiResponse<UserResponse>
+    fun getSingleProduct(): NyopiResponse<ProductResponse>
 
-    @PUT(EndPoint.Product.GET_BANNERS)
-    fun get_banners(@Field("image") image: String): NyopiResponse<UserResponse>
+    @GET(EndPoint.Product.GET_BANNERS)
+    fun get_banners(): NyopiResponse<BannerResponse>
 
-    @POST(EndPoint.Product.GET_SELLER_PROFILE)
-    fun get_seller_profile(@FieldMap updateUserDetail: Map<String, String>): NyopiResponse<UserResponse>
+    @GET(EndPoint.Product.GET_SELLER_PROFILE)
+    fun get_seller_profile(): NyopiResponse<SellerResponse>
+
+    // Transaction
+    @GET(EndPoint.Transaction.GET_CURRENT_TRANSACTION)
+    fun get_current_transaction(@Header("Authorization") auth: String = TOKEN_SAMPLE): NyopiResponse<PageResponse<TransactionResponse>>
+
+    @POST(EndPoint.Transaction.CREATE_TRANSACTION)
+    fun create_transaction(@Header("Authorization") auth: String = TOKEN_SAMPLE): NyopiResponse<PageResponse<TransactionResponse>>
+
+    // Payment
+    @GET(EndPoint.Payment.GET_CURRENT_PAYMENT)
+    fun get_current_payment(@Header("Authorization") auth: String = TOKEN_SAMPLE): NyopiResponse<PaymentResponse>
+
+    @GET(EndPoint.Payment.GET_ALL_PAYMENT)
+    fun get_all_payment(@Header("Authorization") auth: String = TOKEN_SAMPLE): NyopiResponse<PaymentResponse>
+
+    @GET(EndPoint.Payment.CREATE_PAYMENT)
+    fun create_payment(@Header("Authorization") auth: String = TOKEN_SAMPLE): NyopiResponse<PaymentResponse>
+
+    @GET(EndPoint.Payment.GET_ALL_PAYMENT_METHOD)
+    fun get_all_payment_method(@Header("Authorization") auth: String = TOKEN_SAMPLE): NyopiResponse<PayMethodResponse>
+
+    // Cart
+    @POST(EndPoint.Cart.ADD_PRODUCT_TO_CART)
+    fun add_product_to_cart(@Header("Authorization") auth: String = TOKEN_SAMPLE): NyopiResponse<CartResponse>
+
+    @GET(EndPoint.Cart.GET_CART)
+    fun get_cart(@Header("Authorization") auth: String = TOKEN_SAMPLE): NyopiResponse<CartResponse>
+
+    @DELETE(EndPoint.Cart.DELETE_PRODUCT_TO_CART)
+    fun delete_product_to_cart(): NyopiResponse<CartResponse>
+
+    // Simulation
+    @POST(EndPoint.Simulation.PAID_SIMULATION_VIRTUAL_ACCOUNT)
+    fun paid_simulation_to_cart(): NyopiResponse<ProductResponse>
+
+    @POST(EndPoint.Simulation.PAID_SIMULATION_MERCHANT)
+    fun paid_simulation_merchant(): NyopiResponse<ProductResponse>
+
+    @POST(EndPoint.Simulation.FCM_TEST)
+    fun fcm_test(): NyopiResponse<ProductResponse>
 
     companion object {
         const val TOKEN_SAMPLE =
@@ -85,6 +117,7 @@ interface WebServices {
 
     object EndPoint {
         const val BASE_URL = "https://aurel-store.herokuapp.com/v1/"
+        const val BASE_URL_ROOT = "https://aurel-store.herokuapp.com/"
 
         object User {
             const val GET_USER = "user"
@@ -112,6 +145,8 @@ interface WebServices {
             const val GET_CURRENT_PAYMENT =
                 "customer/payment?transaction_id=b65cc32d-bf7b-46ab-b471-9146f37ebe17"
             const val GET_ALL_PAYMENT = "customer/payment/all"
+            const val CREATE_PAYMENT =
+                "customer/payment?transaction_id=843dcfc9-1c14-49ce-a496-1d8fae750286"
             const val GET_ALL_PAYMENT_METHOD = "customer/payment/method"
         }
 
