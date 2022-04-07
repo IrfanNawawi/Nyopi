@@ -14,11 +14,15 @@ import java.util.concurrent.TimeUnit
 interface WebServices {
 
     // User
+    @Headers(CONTENT_TYPE)
     @POST(EndPoint.User.LOGIN)
-    fun login(@FieldMap userLogin: Map<String, String>): NyopiResponse<LoginRegisResponse>
+    fun login(
+        @Body login: HashMap<String, String>
+    ): NyopiResponse<LoginRegisResponse>
 
+    @Headers(CONTENT_TYPE)
     @POST(EndPoint.User.REGISTER)
-    fun register(@FieldMap userRegister: Map<String, String>): NyopiResponse<LoginRegisResponse>
+    fun register(@Body register: HashMap<String, String>): NyopiResponse<LoginRegisResponse>
 
     @GET(EndPoint.User.GET_USER)
     fun getUser(@Header("Authorization") auth: String = TOKEN_SAMPLE): NyopiResponse<UserResponse>
@@ -31,19 +35,23 @@ interface WebServices {
 
     // Product
     @GET(EndPoint.Product.GET_CATEGORY)
-    fun get_category(): NyopiResponse<CategoryResponse>
+    fun get_category(): NyopiResponse<List<CategoryResponse>>
 
     @GET(EndPoint.Product.GET_PRODUCT)
     fun get_product(): NyopiResponse<PageResponse<ProductResponse>>
 
     @GET(EndPoint.Product.GET_SINGLE_PRODUCT)
-    fun getSingleProduct(): NyopiResponse<ProductResponse>
+    fun getSingleProduct(
+        @QueryMap params: HashMap<String?, String?>
+    ): NyopiResponse<ProductResponse>
 
     @GET(EndPoint.Product.GET_BANNERS)
-    fun get_banners(): NyopiResponse<BannerResponse>
+    fun get_banners(): NyopiResponse<List<BannerResponse>>
 
     @GET(EndPoint.Product.GET_SELLER_PROFILE)
-    fun get_seller_profile(): NyopiResponse<SellerResponse>
+    fun get_seller_profile(
+        @Path("seller_id") seller_id: String
+    ): NyopiResponse<SellerResponse>
 
     // Transaction
     @GET(EndPoint.Transaction.GET_CURRENT_TRANSACTION)
@@ -86,8 +94,9 @@ interface WebServices {
     fun fcm_test(): NyopiResponse<ProductResponse>
 
     companion object {
+        const val CONTENT_TYPE = "Content-Type:application/json"
         const val TOKEN_SAMPLE =
-            "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBdXRoZW50aWNhdGlvbiIsImlzcyI6ImNvbS5hZWouYXVyZWwiLCJpZCI6ImQyZTQ2MjdjLTU5MjgtNDJhZi05YTQzLTk5YjRkMzYyNTBlYiIsImV4cCI6MTY0OTczMjQyNSwiaGFzaCI6InJKUExyT0ZOWHdtdE1XcUtWV1R6UUE9PSJ9.0uT4RYT9r1px3faXcUCl52eMg5Jf5nyJkimg5tRsNX8aHFVVXk_KwVugwtmoW24WiDQJxgPPYTp8-_oa9ha7gg"
+            "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBdXRoZW50aWNhdGlvbiIsImlzcyI6ImNvbS5hZWouYXVyZWwiLCJpZCI6IjU5YjNkMGYzLTE4YWMtNGZhNS1hYTM0LTBlZGFlMmMwYTJiMSIsImV4cCI6MTY0OTk0MjcwMSwiaGFzaCI6InJKUExyT0ZOWHdtdE1XcUtWV1R6UUE9PSJ9.loIOTecAMDSQJ-E2B8BNF62LULStB2yvp1mm7T_QWov-HIpXCyxSiogF4gd49vXoqcDV65XiU8c1lVukyGtNuA"
 
         private val gson = GsonBuilder()
             .setPrettyPrinting()
@@ -131,9 +140,9 @@ interface WebServices {
             const val GET_CATEGORY = "category"
             const val GET_PRODUCT = "customer/product"
             const val GET_SINGLE_PRODUCT =
-                "customer/product?product_id=c6dbac34-14f2-46e7-8c8d-f98265fa6ee3"
+                "customer/product"
             const val GET_BANNERS = "customer/product/banner"
-            const val GET_SELLER_PROFILE = "customer/seller/:seller_id"
+            const val GET_SELLER_PROFILE = "customer/seller/{seller_id}"
         }
 
         object Transaction {

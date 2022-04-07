@@ -19,6 +19,18 @@ class MainActivity : AppCompatActivity() {
 
         val services = WebServices.create()
         tvLog.setOnClickListener {
+//            login dan register
+//            val params = HashMap<String, String>()
+//            params["username"] = "irfan"
+//            params["password"] = "123456"
+
+//            single product
+//            val params = HashMap<String?, String?>()
+//            params["product_id"] = "26c18512-56c5-409b-b47b-67352284795f"
+
+//            seller profile
+//            val sellerId = "b331f42b-bb0a-4e7f-9e27-61857f3af19a"
+
             val userDisposable = services.getUser()
                 /*
                 * Catatan:
