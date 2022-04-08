@@ -18,20 +18,28 @@ interface WebServices {
     @POST(EndPoint.User.LOGIN)
     fun login(
         @Body login: HashMap<String, String>
-    ): NyopiResponse<LoginRegisResponse>
+    ): NyopiResponse<LoginRegisterResponse>
 
     @Headers(CONTENT_TYPE)
     @POST(EndPoint.User.REGISTER)
-    fun register(@Body register: HashMap<String, String>): NyopiResponse<LoginRegisResponse>
+    fun register(
+        @Body register: HashMap<String, String>
+    ): NyopiResponse<LoginRegisterResponse>
 
     @GET(EndPoint.User.GET_USER)
-    fun getUser(@Header("Authorization") auth: String = TOKEN_SAMPLE): NyopiResponse<UserResponse>
+    fun getUser(
+        @Header("Authorization") auth: String = TOKEN_SAMPLE
+    ): NyopiResponse<UserResponse>
 
     @PUT(EndPoint.User.UPDATE_IMAGE_PROFILE)
-    fun update_image_profile(@Field("image") image: String): NyopiResponse<UserResponse>
+    fun update_image_profile(
+        @Field("image") image: String
+    ): NyopiResponse<UserResponse>
 
     @PUT(EndPoint.User.UPDATE_USER_DETAIL)
-    fun update_user_detail(@FieldMap updateUserDetail: Map<String, String>): NyopiResponse<UserResponse>
+    fun update_user_detail(
+        @FieldMap updateUserDetail: Map<String, String>
+    ): NyopiResponse<UserResponse>
 
     // Product
     @GET(EndPoint.Product.GET_CATEGORY)
@@ -96,7 +104,7 @@ interface WebServices {
     companion object {
         const val CONTENT_TYPE = "Content-Type:application/json"
         const val TOKEN_SAMPLE =
-            "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBdXRoZW50aWNhdGlvbiIsImlzcyI6ImNvbS5hZWouYXVyZWwiLCJpZCI6IjU5YjNkMGYzLTE4YWMtNGZhNS1hYTM0LTBlZGFlMmMwYTJiMSIsImV4cCI6MTY0OTk0MjcwMSwiaGFzaCI6InJKUExyT0ZOWHdtdE1XcUtWV1R6UUE9PSJ9.loIOTecAMDSQJ-E2B8BNF62LULStB2yvp1mm7T_QWov-HIpXCyxSiogF4gd49vXoqcDV65XiU8c1lVukyGtNuA"
+            "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJawfawfzdWIiOiJBdXRoZW50aWNhdGlvbiIsImlzcyI6ImNvbS5hZWouYXVyZWwiLCJpZCI6IjU5YjNkMGYzLTE4YWMtNGZhNS1hYTM0LTBlZGFlMmMwYTJiMSIsImV4cCI6MTY0OTk0MjcwMSwiaGFzaCI6InJKUExyT0ZOWHdtdE1XcUtWV1R6UUE9PSJ9.loIOTecAMDSQJ-E2B8BNF62LULStB2yvp1mm7T_QWov-HIpXCyxSiogF4gd49vXoqcDV65XiU8c1lVukyGtNuA"
 
         private val gson = GsonBuilder()
             .setPrettyPrinting()
