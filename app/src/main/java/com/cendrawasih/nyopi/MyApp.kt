@@ -2,6 +2,7 @@ package com.cendrawasih.nyopi
 
 import android.app.Application
 import android.os.Build
+import com.facebook.flipper.BuildConfig.DEBUG
 import com.facebook.flipper.android.AndroidFlipperClient
 import com.facebook.flipper.android.utils.FlipperUtils
 import com.facebook.flipper.plugins.inspector.DescriptorMapping
@@ -21,7 +22,7 @@ class MyApp : Application() {
         if (isVersionAboveNougat) {
             SoLoader.init(this, false)
 
-            if (BuildConfig.DEBUG && FlipperUtils.shouldEnableFlipper(this)) {
+            if (DEBUG && FlipperUtils.shouldEnableFlipper(this)) {
                 val client = AndroidFlipperClient.getInstance(this)
                     .apply {
                         val plugin =

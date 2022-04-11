@@ -18,15 +18,15 @@ class HomePageViewModel : ViewModel() {
 
     fun login(username: String, password: String) {
         val request = LoginRegisterRequest(username, password)
-        repository.login(request)
+        repository.post_login(request)
     }
 
     fun register(username: String, password: String) {
         val request = LoginRegisterRequest(username, password)
-        repository.register(request)
+        repository.post_register(request)
     }
 
     fun getUser() {
-        repository.getUser()
+        repository.get_user()
     }
 }

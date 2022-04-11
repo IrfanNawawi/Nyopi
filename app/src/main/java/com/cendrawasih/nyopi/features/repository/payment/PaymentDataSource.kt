@@ -21,10 +21,11 @@ class PaymentDataSource(private val webServices: WebServices) {
         }
     }
 
-    fun create_payment(currentPaymentRequest: PaymentRequest): Observable<Payment> {
-        return webServices.get_create_payment(currentPaymentRequest).mapObservable { createPaymentResponse ->
-            Mapper.mapPaymentToEntity(createPaymentResponse)
-        }
+    fun get_create_payment(createPaymentRequest: PaymentRequest): Observable<Payment> {
+        return webServices.get_create_payment(createPaymentRequest)
+            .mapObservable { createPaymentResponse ->
+                Mapper.mapPaymentToEntity(createPaymentResponse)
+            }
     }
 
     fun get_all_payment_method(): Observable<PayMethod> {

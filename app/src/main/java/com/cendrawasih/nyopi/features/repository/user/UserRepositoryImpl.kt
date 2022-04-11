@@ -23,7 +23,7 @@ class UserRepositoryImpl(private val dataSource: UserDataSource) : UserRepositor
     override val userStateEventManager: StateEventManager<User>
         get() = _userStateEventManager
 
-    override fun login(loginRequest: LoginRegisterRequest) {
+    override fun post_login(loginRequest: LoginRegisterRequest) {
         val disposable =
             dataSource.login(loginRequest).fetchStateEventSubscriber { stateEvent ->
                 _loginRegisterStateEventManager.post(stateEvent)
@@ -32,7 +32,7 @@ class UserRepositoryImpl(private val dataSource: UserDataSource) : UserRepositor
         disposables.add(disposable)
     }
 
-    override fun register(registerRequest: LoginRegisterRequest) {
+    override fun post_register(registerRequest: LoginRegisterRequest) {
         val disposable =
             dataSource.register(registerRequest).fetchStateEventSubscriber { stateEvent ->
                 _loginRegisterStateEventManager.post(stateEvent)
@@ -41,7 +41,7 @@ class UserRepositoryImpl(private val dataSource: UserDataSource) : UserRepositor
         disposables.add(disposable)
     }
 
-    override fun getUser() {
+    override fun get_user() {
         val disposable = dataSource.getUser().fetchStateEventSubscriber { stateEvent ->
             _userStateEventManager.post(stateEvent)
         }

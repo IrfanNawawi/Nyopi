@@ -14,7 +14,7 @@ interface UserRepository : Closeable {
     val loginRegisterStateEventManager: StateEventManager<LoginRegister>
     val userStateEventManager: StateEventManager<User>
 
-    fun login(loginRequest: LoginRegisterRequest)
-    fun register(registerRequest: LoginRegisterRequest)
-    fun getUser()
+    fun post_login(loginRequest: LoginRegisterRequest)
+    fun post_register(registerRequest: LoginRegisterRequest)
+    fun get_user()
 }
