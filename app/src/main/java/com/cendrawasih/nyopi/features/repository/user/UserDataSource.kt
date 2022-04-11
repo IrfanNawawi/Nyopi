@@ -9,8 +9,8 @@ import com.cendrawasih.nyopi.util.mapObservable
 import io.reactivex.Observable
 
 class UserDataSource(private val webServices: WebServices) {
-    fun login(registerRequest: LoginRegisterRequest): Observable<LoginRegister> {
-        return webServices.post_login(registerRequest).mapObservable { loginRegisterResponse ->
+    fun login(loginRequest: LoginRegisterRequest): Observable<LoginRegister> {
+        return webServices.post_login(loginRequest).mapObservable { loginRegisterResponse ->
             Mapper.mapLoginRegisterToEntity(loginRegisterResponse)
         }
     }

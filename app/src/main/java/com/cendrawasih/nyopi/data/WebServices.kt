@@ -66,15 +66,15 @@ interface WebServices {
 
     @POST(EndPoint.Transaction.CREATE_TRANSACTION)
     fun post_create_transaction(
-        @Header("Authorization") auth: String = TOKEN_SAMPLE,
-        @QueryMap transactionRequest: TransactionRequest
+        @QueryMap transactionRequest: TransactionRequest,
+        @Header("Authorization") auth: String = TOKEN_SAMPLE
     ): NyopiResponse<PageResponse<TransactionResponse>>
 
     // Payment
     @GET(EndPoint.Payment.GET_CURRENT_PAYMENT)
     fun get_current_payment(
-        @Header("Authorization") auth: String = TOKEN_SAMPLE,
-        @QueryMap paymentRequest: PaymentRequest
+        @QueryMap paymentRequest: PaymentRequest,
+        @Header("Authorization") auth: String = TOKEN_SAMPLE
     ): NyopiResponse<PaymentResponse>
 
     @GET(EndPoint.Payment.GET_ALL_PAYMENT)
@@ -82,8 +82,8 @@ interface WebServices {
 
     @GET(EndPoint.Payment.CREATE_PAYMENT)
     fun get_create_payment(
-        @Header("Authorization") auth: String = TOKEN_SAMPLE,
-        @QueryMap paymentRequest: PaymentRequest
+        @QueryMap paymentRequest: PaymentRequest,
+        @Header("Authorization") auth: String = TOKEN_SAMPLE
     ): NyopiResponse<PaymentResponse>
 
     @GET(EndPoint.Payment.GET_ALL_PAYMENT_METHOD)
