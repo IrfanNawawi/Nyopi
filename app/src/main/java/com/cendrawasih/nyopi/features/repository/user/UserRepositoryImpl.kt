@@ -4,6 +4,7 @@ import com.cendrawasih.nyopi.data.entity.LoginRegister
 import com.cendrawasih.nyopi.data.entity.User
 import com.cendrawasih.nyopi.data.event.MutableStateEventManager
 import com.cendrawasih.nyopi.data.event.StateEventManager
+import com.cendrawasih.nyopi.data.request.LoginRegisterRequest
 import com.cendrawasih.nyopi.util.fetchStateEventSubscriber
 import io.reactivex.disposables.CompositeDisposable
 import okhttp3.internal.closeQuietly
@@ -15,25 +16,25 @@ class UserRepositoryImpl(private val dataSource: UserDataSource) : UserRepositor
     // backing properties
     private var _loginRegisterStateEventManager: MutableStateEventManager<LoginRegister> =
         MutableStateEventManager()
-    private var _userStateEventManager: MutableStateEventManager<User> = MutableStateEventManager()
-
     override val loginRegisterStateEventManager: StateEventManager<LoginRegister>
         get() = _loginRegisterStateEventManager
+
+    private var _userStateEventManager: MutableStateEventManager<User> = MutableStateEventManager()
     override val userStateEventManager: StateEventManager<User>
         get() = _userStateEventManager
 
-    override fun login(username: String, password: String) {
+    override fun login(loginRequest: LoginRegisterRequest) {
         val disposable =
-            dataSource.login(username, password).fetchStateEventSubscriber { stateEvent ->
+            dataSource.login(loginRequest).fetchStateEventSubscriber { stateEvent ->
                 _loginRegisterStateEventManager.post(stateEvent)
             }
 
         disposables.add(disposable)
     }
 
-    override fun register(username: String, password: String) {
+    override fun register(registerRequest: LoginRegisterRequest) {
         val disposable =
-            dataSource.register(username, password).fetchStateEventSubscriber { stateEvent ->
+            dataSource.register(registerRequest).fetchStateEventSubscriber { stateEvent ->
                 _loginRegisterStateEventManager.post(stateEvent)
             }
 
@@ -50,6 +51,7 @@ class UserRepositoryImpl(private val dataSource: UserDataSource) : UserRepositor
 
     override fun close() {
         _userStateEventManager.closeQuietly()
+        _loginRegisterStateEventManager.closeQuietly()
         disposables.dispose()
     }
 

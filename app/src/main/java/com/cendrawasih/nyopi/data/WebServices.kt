@@ -1,5 +1,6 @@
 package com.cendrawasih.nyopi.data
 
+import com.cendrawasih.nyopi.data.request.*
 import com.cendrawasih.nyopi.data.response.*
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
@@ -14,16 +15,14 @@ import java.util.concurrent.TimeUnit
 interface WebServices {
 
     // User
-    @Headers(CONTENT_TYPE)
     @POST(EndPoint.User.LOGIN)
-    fun login(
-        @Body login: HashMap<String, String>
+    fun post_login(
+        @Body loginRequest: LoginRegisterRequest
     ): NyopiResponse<LoginRegisterResponse>
 
-    @Headers(CONTENT_TYPE)
     @POST(EndPoint.User.REGISTER)
-    fun register(
-        @Body register: HashMap<String, String>
+    fun post_register(
+        @Body registerRequest: LoginRegisterRequest
     ): NyopiResponse<LoginRegisterResponse>
 
     @GET(EndPoint.User.GET_USER)
@@ -32,12 +31,12 @@ interface WebServices {
     ): NyopiResponse<UserResponse>
 
     @PUT(EndPoint.User.UPDATE_IMAGE_PROFILE)
-    fun update_image_profile(
+    fun put_update_image_profile(
         @Field("image") image: String
     ): NyopiResponse<UserResponse>
 
     @PUT(EndPoint.User.UPDATE_USER_DETAIL)
-    fun update_user_detail(
+    fun put_update_user_detail(
         @FieldMap updateUserDetail: Map<String, String>
     ): NyopiResponse<UserResponse>
 
@@ -49,16 +48,16 @@ interface WebServices {
     fun get_product(): NyopiResponse<PageResponse<ProductResponse>>
 
     @GET(EndPoint.Product.GET_SINGLE_PRODUCT)
-    fun getSingleProduct(
-        @QueryMap params: HashMap<String?, String?>
+    fun get_single_product(
+        @QueryMap productRequest: ProductRequest
     ): NyopiResponse<ProductResponse>
 
     @GET(EndPoint.Product.GET_BANNERS)
-    fun get_banners(): NyopiResponse<List<BannerResponse>>
+    fun get_banner(): NyopiResponse<List<BannerResponse>>
 
     @GET(EndPoint.Product.GET_SELLER_PROFILE)
     fun get_seller_profile(
-        @Path("seller_id") seller_id: String
+        @Path("seller_id") sellerRequest: SellerRequest
     ): NyopiResponse<SellerResponse>
 
     // Transaction
@@ -66,24 +65,33 @@ interface WebServices {
     fun get_current_transaction(@Header("Authorization") auth: String = TOKEN_SAMPLE): NyopiResponse<PageResponse<TransactionResponse>>
 
     @POST(EndPoint.Transaction.CREATE_TRANSACTION)
-    fun create_transaction(@Header("Authorization") auth: String = TOKEN_SAMPLE): NyopiResponse<PageResponse<TransactionResponse>>
+    fun post_create_transaction(
+        @Header("Authorization") auth: String = TOKEN_SAMPLE,
+        @QueryMap transactionRequest: TransactionRequest
+    ): NyopiResponse<PageResponse<TransactionResponse>>
 
     // Payment
     @GET(EndPoint.Payment.GET_CURRENT_PAYMENT)
-    fun get_current_payment(@Header("Authorization") auth: String = TOKEN_SAMPLE): NyopiResponse<PaymentResponse>
+    fun get_current_payment(
+        @Header("Authorization") auth: String = TOKEN_SAMPLE,
+        @QueryMap paymentRequest: PaymentRequest
+    ): NyopiResponse<PaymentResponse>
 
     @GET(EndPoint.Payment.GET_ALL_PAYMENT)
     fun get_all_payment(@Header("Authorization") auth: String = TOKEN_SAMPLE): NyopiResponse<PaymentResponse>
 
     @GET(EndPoint.Payment.CREATE_PAYMENT)
-    fun create_payment(@Header("Authorization") auth: String = TOKEN_SAMPLE): NyopiResponse<PaymentResponse>
+    fun get_create_payment(
+        @Header("Authorization") auth: String = TOKEN_SAMPLE,
+        @QueryMap paymentRequest: PaymentRequest
+    ): NyopiResponse<PaymentResponse>
 
     @GET(EndPoint.Payment.GET_ALL_PAYMENT_METHOD)
     fun get_all_payment_method(@Header("Authorization") auth: String = TOKEN_SAMPLE): NyopiResponse<PayMethodResponse>
 
     // Cart
     @POST(EndPoint.Cart.ADD_PRODUCT_TO_CART)
-    fun add_product_to_cart(@Header("Authorization") auth: String = TOKEN_SAMPLE): NyopiResponse<CartResponse>
+    fun post_add_product_to_cart(@Header("Authorization") auth: String = TOKEN_SAMPLE): NyopiResponse<CartResponse>
 
     @GET(EndPoint.Cart.GET_CART)
     fun get_cart(@Header("Authorization") auth: String = TOKEN_SAMPLE): NyopiResponse<CartResponse>
@@ -93,16 +101,15 @@ interface WebServices {
 
     // Simulation
     @POST(EndPoint.Simulation.PAID_SIMULATION_VIRTUAL_ACCOUNT)
-    fun paid_simulation_to_cart(): NyopiResponse<ProductResponse>
+    fun post_paid_simulation_to_cart(@Body simulationRequest: SimulationRequest): NyopiResponse<ProductResponse>
 
     @POST(EndPoint.Simulation.PAID_SIMULATION_MERCHANT)
-    fun paid_simulation_merchant(): NyopiResponse<ProductResponse>
+    fun post_paid_simulation_merchant(@Body simulationRequest: SimulationRequest): NyopiResponse<ProductResponse>
 
     @POST(EndPoint.Simulation.FCM_TEST)
-    fun fcm_test(): NyopiResponse<ProductResponse>
+    fun post_fcm_test(): NyopiResponse<ProductResponse>
 
     companion object {
-        const val CONTENT_TYPE = "Content-Type:application/json"
         const val TOKEN_SAMPLE =
             "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJawfawfzdWIiOiJBdXRoZW50aWNhdGlvbiIsImlzcyI6ImNvbS5hZWouYXVyZWwiLCJpZCI6IjU5YjNkMGYzLTE4YWMtNGZhNS1hYTM0LTBlZGFlMmMwYTJiMSIsImV4cCI6MTY0OTk0MjcwMSwiaGFzaCI6InJKUExyT0ZOWHdtdE1XcUtWV1R6UUE9PSJ9.loIOTecAMDSQJ-E2B8BNF62LULStB2yvp1mm7T_QWov-HIpXCyxSiogF4gd49vXoqcDV65XiU8c1lVukyGtNuA"
 
@@ -160,10 +167,10 @@ interface WebServices {
 
         object Payment {
             const val GET_CURRENT_PAYMENT =
-                "customer/payment?transaction_id=b65cc32d-bf7b-46ab-b471-9146f37ebe17"
+                "customer/payment"
             const val GET_ALL_PAYMENT = "customer/payment/all"
             const val CREATE_PAYMENT =
-                "customer/payment?transaction_id=843dcfc9-1c14-49ce-a496-1d8fae750286"
+                "customer/payment"
             const val GET_ALL_PAYMENT_METHOD = "customer/payment/method"
         }
 

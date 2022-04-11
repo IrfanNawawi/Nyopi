@@ -4,26 +4,19 @@ import com.cendrawasih.nyopi.data.Mapper
 import com.cendrawasih.nyopi.data.WebServices
 import com.cendrawasih.nyopi.data.entity.LoginRegister
 import com.cendrawasih.nyopi.data.entity.User
+import com.cendrawasih.nyopi.data.request.LoginRegisterRequest
 import com.cendrawasih.nyopi.util.mapObservable
 import io.reactivex.Observable
 
 class UserDataSource(private val webServices: WebServices) {
-    fun login(username: String, password: String): Observable<LoginRegister> {
-        val params = HashMap<String, String>()
-        params["username"] = username
-        params["password"] = password
-
-        return webServices.login(params).mapObservable { loginRegisterResponse ->
+    fun login(registerRequest: LoginRegisterRequest): Observable<LoginRegister> {
+        return webServices.post_login(registerRequest).mapObservable { loginRegisterResponse ->
             Mapper.mapLoginRegisterToEntity(loginRegisterResponse)
         }
     }
 
-    fun register(username: String, password: String): Observable<LoginRegister> {
-        val params = HashMap<String, String>()
-        params["username"] = username
-        params["password"] = password
-
-        return webServices.register(params).mapObservable { loginRegisterResponse ->
+    fun register(registerRequest: LoginRegisterRequest): Observable<LoginRegister> {
+        return webServices.post_register(registerRequest).mapObservable { loginRegisterResponse ->
             Mapper.mapLoginRegisterToEntity(loginRegisterResponse)
         }
     }
