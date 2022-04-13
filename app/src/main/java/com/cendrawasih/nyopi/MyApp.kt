@@ -2,12 +2,16 @@ package com.cendrawasih.nyopi
 
 import android.app.Application
 import android.os.Build
+import com.cendrawasih.nyopi.di.HomePageModuleProvider
+import com.cendrawasih.nyopi.di.core.CoreModuleProvider
 import com.facebook.flipper.BuildConfig.DEBUG
 import com.facebook.flipper.android.AndroidFlipperClient
 import com.facebook.flipper.android.utils.FlipperUtils
 import com.facebook.flipper.plugins.inspector.DescriptorMapping
 import com.facebook.flipper.plugins.inspector.InspectorFlipperPlugin
 import com.facebook.soloader.SoLoader
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
 
 
 class MyApp : Application() {
@@ -15,6 +19,10 @@ class MyApp : Application() {
     override fun onCreate() {
         super.onCreate()
         flipperIntegration()
+        startKoin {
+            androidContext(this@MyApp)
+            modules(CoreModuleProvider.coreModules() + HomePageModuleProvider.homePageModules())
+        }
     }
 
     private fun flipperIntegration() {

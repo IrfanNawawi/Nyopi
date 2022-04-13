@@ -55,4 +55,6 @@ dependencies {
     debugImplementation 'com.facebook.flipper:flipper:0.141.0'
     debugImplementation 'com.facebook.soloader:soloader:0.10.1'
 
+    // koin (depedencies injection)
+    implementation 'io.insert-koin:koin-android:3.1.6'
 }
