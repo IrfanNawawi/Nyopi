@@ -2,7 +2,7 @@ package com.cendrawasih.nyopi
 
 import android.app.Application
 import android.os.Build
-import com.cendrawasih.nyopi.di.HomePageModuleProvider
+import com.cendrawasih.nyopi.di.homepage.HomePageModuleProvider
 import com.cendrawasih.nyopi.di.core.CoreModuleProvider
 import com.facebook.flipper.BuildConfig.DEBUG
 import com.facebook.flipper.android.AndroidFlipperClient

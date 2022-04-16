@@ -5,9 +5,13 @@ import org.koin.core.module.Module
 object CoreModuleProvider {
     private val coreModuleContainer = CoreModuleContainer()
 
+    // reflection
     fun coreModules(): List<Module> {
-        return listOf(
-            coreModuleContainer.webServicesModule
-        )
+        val declarCoreModule = coreModuleContainer::class.java.declaredFields.map {
+            it.isAccessible = true
+            it.get(coreModuleContainer) as Module
+        }
+
+        return declarCoreModule
     }
 }

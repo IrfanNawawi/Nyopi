@@ -1,4 +1,4 @@
-package com.cendrawasih.nyopi.di
+package com.cendrawasih.nyopi.di.homepage
 
 import com.cendrawasih.nyopi.features.repository.user.UserDataSource
 import com.cendrawasih.nyopi.features.repository.user.UserRepository
