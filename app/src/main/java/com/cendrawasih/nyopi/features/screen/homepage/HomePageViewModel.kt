@@ -5,6 +5,7 @@ import com.cendrawasih.nyopi.data.entity.LoginRegister
 import com.cendrawasih.nyopi.data.event.StateEventManager
 import com.cendrawasih.nyopi.data.request.LoginRegisterRequest
 import com.cendrawasih.nyopi.features.repository.user.UserRepository
+import okhttp3.internal.closeQuietly
 
 class HomePageViewModel(private val repository: UserRepository) : ViewModel() {
 
@@ -22,5 +23,11 @@ class HomePageViewModel(private val repository: UserRepository) : ViewModel() {
 
     fun getUser() {
         repository.get_user()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        repository.close()
+        userManager.closeQuietly()
     }
 }
