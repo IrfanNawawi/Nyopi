@@ -3,18 +3,16 @@ package com.cendrawasih.nyopi
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.cendrawasih.nyopi.features.screen.homepage.HomePageViewModel
 import io.reactivex.disposables.CompositeDisposable
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 
     private val tvLog: TextView by lazy { findViewById(R.id.txt_log) }
     private val disposables = CompositeDisposable()
 
-    private val homePageViewModel: HomePageViewModel by lazy {
-        ViewModelProvider(this)[HomePageViewModel::class.java]
-    }
+    private val homePageViewModel: HomePageViewModel by viewModel<HomePageViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

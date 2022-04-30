@@ -1,18 +1,13 @@
 package com.cendrawasih.nyopi.features.screen.homepage
 
 import androidx.lifecycle.ViewModel
-import com.cendrawasih.nyopi.data.WebServices
 import com.cendrawasih.nyopi.data.entity.LoginRegister
 import com.cendrawasih.nyopi.data.event.StateEventManager
 import com.cendrawasih.nyopi.data.request.LoginRegisterRequest
-import com.cendrawasih.nyopi.features.repository.user.UserDataSource
 import com.cendrawasih.nyopi.features.repository.user.UserRepository
-import com.cendrawasih.nyopi.features.repository.user.UserRepositoryImpl
+import okhttp3.internal.closeQuietly
 
-class HomePageViewModel : ViewModel() {
-    private val services = WebServices.create()
-    private val dataSource = UserDataSource(services)
-    private val repository: UserRepository = UserRepositoryImpl(dataSource)
+class HomePageViewModel(private val repository: UserRepository) : ViewModel() {
 
     val userManager: StateEventManager<LoginRegister> = repository.loginRegisterStateEventManager
 
@@ -28,5 +23,11 @@ class HomePageViewModel : ViewModel() {
 
     fun getUser() {
         repository.get_user()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        repository.close()
+        userManager.closeQuietly()
     }
 }
