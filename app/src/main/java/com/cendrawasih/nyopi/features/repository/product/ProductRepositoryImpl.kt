@@ -1,13 +1,13 @@
 package com.cendrawasih.nyopi.features.repository.product
 
-import com.cendrawasih.nyopi.data.entity.Banner
-import com.cendrawasih.nyopi.data.entity.Category
-import com.cendrawasih.nyopi.data.entity.Product
-import com.cendrawasih.nyopi.data.entity.Seller
-import com.cendrawasih.nyopi.data.event.MutableStateEventManager
-import com.cendrawasih.nyopi.data.event.StateEventManager
-import com.cendrawasih.nyopi.data.request.SellerRequest
-import com.cendrawasih.nyopi.util.fetchStateEventSubscriber
+import com.cendrawasih.core.event.MutableStateEventManager
+import com.cendrawasih.core.event.StateEventManager
+import com.cendrawasih.core.util.fetchStateEventSubscriber
+import com.cendrawasih.profile.data.entity.Banner
+import com.cendrawasih.profile.data.entity.Category
+import com.cendrawasih.profile.data.entity.Product
+import com.cendrawasih.profile.data.entity.Seller
+import com.cendrawasih.profile.data.remote.request.SellerRequest
 import io.reactivex.disposables.CompositeDisposable
 import okhttp3.internal.closeQuietly
 

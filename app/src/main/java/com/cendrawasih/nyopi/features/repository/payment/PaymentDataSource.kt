@@ -1,36 +1,37 @@
 package com.cendrawasih.nyopi.features.repository.payment
 
-import com.cendrawasih.nyopi.data.Mapper
-import com.cendrawasih.nyopi.data.WebServices
-import com.cendrawasih.nyopi.data.entity.PayMethod
-import com.cendrawasih.nyopi.data.entity.Payment
-import com.cendrawasih.nyopi.data.request.PaymentRequest
-import com.cendrawasih.nyopi.util.mapObservable
+import com.cendrawasih.core.util.mapObservable
+import com.cendrawasih.profile.data.ProfileMapper
+import com.cendrawasih.profile.data.entity.PayMethod
+import com.cendrawasih.profile.data.entity.Payment
+import com.cendrawasih.profile.data.remote.ProfileWebServices
+import com.cendrawasih.profile.data.remote.request.PaymentRequest
 import io.reactivex.Observable
 
-class PaymentDataSource(private val webServices: WebServices) {
+class PaymentDataSource(private val profileWebServices: ProfileWebServices) {
     fun get_current_payment(currentPaymentRequest: PaymentRequest): Observable<Payment> {
-        return webServices.get_current_payment(currentPaymentRequest).mapObservable { currentPaymentResponse ->
-            Mapper.mapPaymentToEntity(currentPaymentResponse)
-        }
+        return profileWebServices.get_current_payment(currentPaymentRequest)
+            .mapObservable { currentPaymentResponse ->
+                ProfileMapper.mapPaymentToEntity(currentPaymentResponse)
+            }
     }
 
     fun get_all_payment(): Observable<Payment> {
-        return webServices.get_all_payment().mapObservable { allPaymentResponse ->
-            Mapper.mapPaymentToEntity(allPaymentResponse)
+        return profileWebServices.get_all_payment().mapObservable { allPaymentResponse ->
+            ProfileMapper.mapPaymentToEntity(allPaymentResponse)
         }
     }
 
     fun get_create_payment(createPaymentRequest: PaymentRequest): Observable<Payment> {
-        return webServices.get_create_payment(createPaymentRequest)
+        return profileWebServices.get_create_payment(createPaymentRequest)
             .mapObservable { createPaymentResponse ->
-                Mapper.mapPaymentToEntity(createPaymentResponse)
+                ProfileMapper.mapPaymentToEntity(createPaymentResponse)
             }
     }
 
     fun get_all_payment_method(): Observable<PayMethod> {
-        return webServices.get_all_payment_method().mapObservable { allPaymentMethodResponse ->
-            Mapper.mapPayMethodToEntity(allPaymentMethodResponse)
+        return profileWebServices.get_all_payment_method().mapObservable { allPaymentMethodResponse ->
+            ProfileMapper.mapPayMethodToEntity(allPaymentMethodResponse)
         }
     }
 }

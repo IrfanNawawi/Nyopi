@@ -1,11 +1,11 @@
 package com.cendrawasih.nyopi.features.repository.payment
 
-import com.cendrawasih.nyopi.data.entity.PayMethod
-import com.cendrawasih.nyopi.data.entity.Payment
-import com.cendrawasih.nyopi.data.event.MutableStateEventManager
-import com.cendrawasih.nyopi.data.event.StateEventManager
-import com.cendrawasih.nyopi.data.request.PaymentRequest
-import com.cendrawasih.nyopi.util.fetchStateEventSubscriber
+import com.cendrawasih.core.event.MutableStateEventManager
+import com.cendrawasih.core.event.StateEventManager
+import com.cendrawasih.core.util.fetchStateEventSubscriber
+import com.cendrawasih.profile.data.entity.PayMethod
+import com.cendrawasih.profile.data.entity.Payment
+import com.cendrawasih.profile.data.remote.request.PaymentRequest
 import io.reactivex.disposables.CompositeDisposable
 import okhttp3.internal.closeQuietly
 

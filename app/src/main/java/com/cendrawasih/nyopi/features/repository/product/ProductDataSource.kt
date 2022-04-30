@@ -1,20 +1,20 @@
 package com.cendrawasih.nyopi.features.repository.product
 
-import com.cendrawasih.nyopi.data.Mapper
-import com.cendrawasih.nyopi.data.WebServices
-import com.cendrawasih.nyopi.data.entity.Banner
-import com.cendrawasih.nyopi.data.entity.Category
-import com.cendrawasih.nyopi.data.entity.Product
-import com.cendrawasih.nyopi.data.entity.Seller
-import com.cendrawasih.nyopi.data.request.ProductRequest
-import com.cendrawasih.nyopi.data.request.SellerRequest
-import com.cendrawasih.nyopi.util.mapObservable
+import com.cendrawasih.core.util.mapObservable
+import com.cendrawasih.profile.data.ProfileMapper
+import com.cendrawasih.profile.data.entity.Banner
+import com.cendrawasih.profile.data.entity.Category
+import com.cendrawasih.profile.data.entity.Product
+import com.cendrawasih.profile.data.entity.Seller
+import com.cendrawasih.profile.data.remote.ProfileWebServices
+import com.cendrawasih.profile.data.remote.request.ProductRequest
+import com.cendrawasih.profile.data.remote.request.SellerRequest
 import io.reactivex.Observable
 
-class ProductDataSource(private val webServices: WebServices) {
+class ProductDataSource(private val profileWebServices: ProfileWebServices) {
     fun get_category(): Observable<List<Category>> {
-        return webServices.get_category().mapObservable { categoryResponse ->
-            categoryResponse.map { Mapper.mapCategoryToEntity(it) }
+        return profileWebServices.get_category().mapObservable { categoryResponse ->
+            categoryResponse.map { ProfileMapper.mapCategoryToEntity(it) }
         }
     }
 
@@ -25,20 +25,20 @@ class ProductDataSource(private val webServices: WebServices) {
 //    }
 
     fun get_single_product(request: ProductRequest): Observable<Product> {
-        return webServices.get_single_product(request).mapObservable { singleProductResponse ->
-            Mapper.mapProductToEntity(singleProductResponse)
+        return profileWebServices.get_single_product(request).mapObservable { singleProductResponse ->
+            ProfileMapper.mapProductToEntity(singleProductResponse)
         }
     }
 
     fun get_banner(): Observable<List<Banner>> {
-        return webServices.get_banner().mapObservable { bannerResponse ->
-            bannerResponse.map { Mapper.mapBannerToEntity(it) }
+        return profileWebServices.get_banner().mapObservable { bannerResponse ->
+            bannerResponse.map { ProfileMapper.mapBannerToEntity(it) }
         }
     }
 
     fun get_seller_profile(sellerRequest: SellerRequest): Observable<Seller> {
-        return webServices.get_seller_profile(sellerRequest).mapObservable { sellerResponse ->
-            Mapper.mapSellerToEntity(sellerResponse)
+        return profileWebServices.get_seller_profile(sellerRequest).mapObservable { sellerResponse ->
+            ProfileMapper.mapSellerToEntity(sellerResponse)
         }
     }
 }

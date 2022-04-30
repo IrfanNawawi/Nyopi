@@ -14,3 +14,6 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Nyopi"
 include ':app'
+include ':core'
+include ':features:homepage'
+include ':features:profile'

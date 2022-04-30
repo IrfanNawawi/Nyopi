@@ -1,11 +1,11 @@
 package com.cendrawasih.nyopi.features.repository.product
 
-import com.cendrawasih.nyopi.data.entity.Banner
-import com.cendrawasih.nyopi.data.entity.Category
-import com.cendrawasih.nyopi.data.entity.Product
-import com.cendrawasih.nyopi.data.entity.Seller
-import com.cendrawasih.nyopi.data.event.StateEventManager
-import com.cendrawasih.nyopi.data.request.SellerRequest
+import com.cendrawasih.core.event.StateEventManager
+import com.cendrawasih.profile.data.entity.Banner
+import com.cendrawasih.profile.data.entity.Category
+import com.cendrawasih.profile.data.entity.Product
+import com.cendrawasih.profile.data.entity.Seller
+import com.cendrawasih.profile.data.remote.request.SellerRequest
 import java.io.Closeable
 
 interface ProductRepository : Closeable {
