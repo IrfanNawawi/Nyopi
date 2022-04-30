@@ -1,23 +1,15 @@
 package com.cendrawasih.nyopi.di.homepage
 
-import com.cendrawasih.nyopi.features.repository.user.UserDataSource
-import com.cendrawasih.nyopi.features.repository.user.UserRepository
-import com.cendrawasih.nyopi.features.repository.user.UserRepositoryImpl
+import com.cendrawasih.core.di.ModuleContainer
 import com.cendrawasih.nyopi.features.screen.homepage.HomePageViewModel
+import com.cendrawasih.nyopi.features.screen.splash.SplashViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
-class HomePageModuleContainer {
+class HomePageModuleContainer: ModuleContainer() {
 
-    val dataSourceModule = module {
-        single<UserDataSource> { UserDataSource(get()) }
-    }
-
-    val repositoryModule = module {
-        single<UserRepository> { UserRepositoryImpl(get()) }
-    }
-
-    val viewModelMmodule = module {
+    private val viewModelMmodule = module {
         viewModel { HomePageViewModel(get()) }
+        viewModel { SplashViewModel(get()) }
     }
 }

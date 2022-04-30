@@ -2,8 +2,8 @@ package com.cendrawasih.nyopi
 
 import android.app.Application
 import android.os.Build
-import com.cendrawasih.nyopi.di.homepage.HomePageModuleProvider
-import com.cendrawasih.nyopi.di.core.CoreModuleProvider
+import com.cendrawasih.nyopi.di.homepage.HomePageModuleContainer
+import com.cendrawasih.profile.di.ProfileModuleContainer
 import com.facebook.flipper.BuildConfig.DEBUG
 import com.facebook.flipper.android.AndroidFlipperClient
 import com.facebook.flipper.android.utils.FlipperUtils
@@ -19,9 +19,12 @@ class MyApp : Application() {
     override fun onCreate() {
         super.onCreate()
         flipperIntegration()
+        val homePageModuleContainer = HomePageModuleContainer()
+        val profileModuleContainer = ProfileModuleContainer()
+
         startKoin {
             androidContext(this@MyApp)
-            modules(CoreModuleProvider.coreModules() + HomePageModuleProvider.homePageModules())
+            modules(profileModuleContainer.modules() + homePageModuleContainer.modules())
         }
     }
 

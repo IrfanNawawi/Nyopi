@@ -1,9 +1,9 @@
 package com.cendrawasih.nyopi.features.repository.payment
 
-import com.cendrawasih.nyopi.data.entity.PayMethod
-import com.cendrawasih.nyopi.data.entity.Payment
-import com.cendrawasih.nyopi.data.event.StateEventManager
-import com.cendrawasih.nyopi.data.request.PaymentRequest
+import com.cendrawasih.core.event.StateEventManager
+import com.cendrawasih.profile.data.entity.PayMethod
+import com.cendrawasih.profile.data.entity.Payment
+import com.cendrawasih.profile.data.remote.request.PaymentRequest
 import java.io.Closeable
 
 interface PaymentRepository : Closeable {
